@@ -1,4 +1,5 @@
 const express = require("express");
+const res = require("express/lib/response");
 const router = express.Router();
 
 try {
@@ -7,28 +8,39 @@ try {
   router.use("/Thread", require("./Thread.js"));
   router.use("/Comment", require("./Comment.js"));
 
-  router.get("/", function (req, res) {
+  /*
+  const obj = {
+    tmp: "tmp",
+    tmp_array: [{ tmp_1: "tmp_1" }, { tmp_2: "tmp_2" }],
+  };
+  const json = JSON.stringify(obj);
+  console.log(json);
+  const decode = JSON.parse(json);
+  console.log(decode.tmp_array[0]);
+*/
+
+  router.get("/", (req, res) => {
     res.status(200).json(
       JSON.stringify({
         message: "Hello,world",
       })
     );
   });
-  router.post("/", function (req, res) {
+  router.post("/", (req, res) => {
     res.status(200).json(
       JSON.stringify({
         message: "Hello,world",
       })
     );
   });
-  router.put("/", function (req, res) {
+  router.put("/", (req, res) => {
     res.status(200).json(
       JSON.stringify({
         message: "Hello,world",
       })
     );
   });
-  router.delete("/", function (req, res) {
+  router.delete("/", (req, res) => {
     res.status(200).json(
       JSON.stringify({
         message: "Hello,world",
@@ -36,6 +48,8 @@ try {
     );
   });
 } catch (err) {
+  console.log(err);
+  res.status(404).json(JSON.stringify({ Error: "Error" }));
   throw new Error(err);
 }
 

@@ -21,36 +21,6 @@ const v1 = require("./v1/");
 // v1を"/v1/"アクセスのapiとして扱う
 app.use("/v1/", v1);
 
-// ルーティング
-router.get("/", function (req, res) {
-  res.status(200).json(
-    JSON.stringify({
-      message: "Hello,world",
-    })
-  );
-});
-router.post("/", function (req, res) {
-  res.status(200).json(
-    JSON.stringify({
-      message: "Hello,world",
-    })
-  );
-});
-router.put("/", function (req, res) {
-  res.status(200).json(
-    JSON.stringify({
-      message: "Hello,world",
-    })
-  );
-});
-router.delete("/", function (req, res) {
-  res.status(200).json(
-    JSON.stringify({
-      message: "Hello,world",
-    })
-  );
-});
-
 // http://future-is-now-k02.blogspot.com/2012/11/nodejs-expressurl404.html
 //エラーハンドリング(404)
 app.use(function (req, res, next) {

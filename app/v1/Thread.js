@@ -1,7 +1,9 @@
 require("dotenv").config();
 
+const e = require("express");
 const express = require("express");
 const router = express.Router();
+const { check, validationResult } = require("express-validator");
 
 const mysql = require("mysql2");
 // https://github.com/sidorares/node-mysql2
@@ -14,28 +16,133 @@ var pool = mysql.createPool(db_config.mysql_setting);
 
 //SELECT *
 try {
-  router.get("/:id", (req, res) => {
-    const errors = [];
-    const id = req.params.id;
+  router.get(
+    "/:id",
+    // id must be an integer
+    check("id").isInt({ min: 1 }).escape(),
+    (req, res) => {
+      const Errors = validationResult(req);
+      if (!Errors.isEmpty()) {
+        //If there is an Error...//
+        //console.log(Errors); //todo CommentOut
+        //console.log(Errors.array()); //todo CommentOut
+        //console.log(JSON.stringify(Errors, null, 2)); //todo CommentOut
+        //console.log(JSON.stringify(Errors.array(), null, 2)); //todo CommentOut
+        const Response = { Status: 0 };
+        Response.Errors = Errors.array();
+        //console.log(Response); //todo CommentOut
+        return res.status(404).json(JSON.stringify(Response));
+      }
+      const id = req.params.id;
 
-    pool.getConnection(function (err, connection) {
-      connection.execute(
-        "SELECT comment_id,comment,comment_time FROM comment WHERE thread_id = ? ;",
-        [id],
-        (error, results) => {
-          //console.log(results);
-          connection.release();
-          /*
-          const json = JSON.stringify(results);
-          console.log(json);
-          decode = JSON.parse(json);
-          console.log(decode);
-          */
-          res.status(200).json(JSON.stringify(results));
-        }
-      );
-    });
-  });
+      pool.getConnection(function (err, connection) {
+        connection.execute(
+          "SELECT comment_id,comment,comment_time FROM comment WHERE thread_id = ?;",
+          [id],
+          (error, results) => {
+            connection.release();
+            //console.log(results); //todo CommentOut
+            //console.log(JSON.stringify(results, null, 2)); //todo CommentOut
+            //console.log(JSON.parse(JSON.stringify(results))); //todo CommentOut
+            if (results && results.length > 0) {
+              res.status(200).json(JSON.stringify(results));
+            } else if (results && results.length == 0) {
+              res.status(404).json(JSON.stringify({ Status: 0 }));
+            } else if (error) {
+              res.status(404).json(JSON.stringify({ Status: 0 }));
+            }
+          }
+        );
+      });
+    }
+  );
+
+  router.post(
+    "/",
+    // id must be an integer
+    check("category_id").isInt({ min: 1 }).escape(),
+    check("thread_name").isLength({ min: 1, max: 32 }).escape(),
+    (req, res) => {
+      const Errors = validationResult(req);
+      if (!Errors.isEmpty()) {
+        //If there is an Error...//
+        //console.log(Errors); //todo CommentOut
+        //console.log(Errors.array()); //todo CommentOut
+        //console.log(JSON.stringify(Errors, null, 2)); //todo CommentOut
+        //console.log(JSON.stringify(Errors.array(), null, 2)); //todo CommentOut
+        const Response = { Status: 0 };
+        Response.Errors = Errors.array();
+        //console.log(Response); //todo CommentOut
+        return res.status(404).json(JSON.stringify(Response));
+      }
+      const category_id = req.body.category_id;
+      const thread_name = req.body.thread_name;
+
+      const dt = new Date();
+      const thread_time = dt.toFormat("YYYY-MM-DD HH24:MI:SS");
+
+      pool.getConnection(function (err, connection) {
+        connection.execute(
+          "INSERT INTO thread_list(thread_id,category_id,thread_name,thread_time,closed_flag) VALUES(0,?,?,?,0);",
+          [category_id, thread_name, thread_time],
+          (error, results) => {
+            connection.release();
+            //console.log(results); //todo CommentOut
+            //console.log(JSON.stringify(results, null, 2)); //todo CommentOut
+            //console.log(JSON.parse(JSON.stringify(results))); //todo CommentOut
+            if (results && results.affectedRows >= 1) {
+              res.status(200).json(JSON.stringify({ Status: 1 }));
+            } else if (results && results.affectedRows == 0) {
+              res.status(200).json(JSON.stringify({ Status: 0 }));
+            } else if (error) {
+              res.status(200).json(JSON.stringify({ Status: 0 }));
+            }
+          }
+        );
+      });
+    }
+  );
+
+  router.delete(
+    "/",
+    // id must be an integer
+    check("thread_id").isInt({ min: 1 }).escape(),
+    (req, res) => {
+      const Errors = validationResult(req);
+      if (!Errors.isEmpty()) {
+        //If there is an Error...//
+        //console.log(Errors); //todo CommentOut
+        //console.log(Errors.array()); //todo CommentOut
+        //console.log(JSON.stringify(Errors, null, 2)); //todo CommentOut
+        //console.log(JSON.stringify(Errors.array(), null, 2)); //todo CommentOut
+        const Response = { Status: 0 };
+        Response.Errors = Errors.array();
+        //console.log(Response); //todo CommentOut
+        return res.status(404).json(JSON.stringify(Response));
+      }
+      const thread_id = req.body.thread_id;
+
+      pool.getConnection(function (err, connection) {
+        connection.execute(
+          "DELETE FROM Thread_list WHERE thread_id = ?;",
+          [thread_id],
+          (error, results) => {
+            connection.release();
+            //console.log(results); //todo CommentOut
+            //console.log(JSON.stringify(results, null, 2)); //todo CommentOut
+            //console.log(JSON.parse(JSON.stringify(results))); //todo CommentOut
+            if (results && results.affectedRows >= 1) {
+              res.status(200).json(JSON.stringify({ Status: 1 }));
+            } else if (results && results.affectedRows == 0) {
+              res.status(200).json(JSON.stringify({ Status: 0 }));
+            } else if (error) {
+              res.status(200).json(JSON.stringify({ Status: 0 }));
+            }
+          }
+        );
+      });
+    }
+  );
 } catch (err) {
   throw new Error(err);
 }
