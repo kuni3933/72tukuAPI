@@ -25,12 +25,11 @@ try {
           //console.log(JSON.stringify(results, null, 2));
           //console.log(JSON.parse(JSON.stringify(results)));
           if (results && results.length > 0) {
-            const obj = [];
-            obj.push({ status: "1", data: results });
+            const obj = { status: 1, data: results };
             //console.log(obj);
-            console.log(JSON.stringify(obj, null, 2));
-            console.log(JSON.parse(JSON.stringify(obj)));
-            res.status(200).json(JSON.stringify(obj));
+            //console.log(JSON.stringify(obj, null, 2));
+            //console.log(JSON.parse(JSON.stringify(obj)));
+            res.status(200).json(obj);
           } else if (results && results.length == 0) {
             res.status(404).json(JSON.stringify({ Status: 0 }));
           } else if (error) {
@@ -71,6 +70,7 @@ try {
             //console.log(JSON.stringify(results, null, 2)); //todo CommentOut
             //console.log(JSON.parse(JSON.stringify(results))); //todo CommentOut
             if (results.length == 1) {
+              const obj = { status: 1, data: results };
               res.status(200).json(JSON.stringify(results));
             } else if (results.length == 0) {
               res.status(404).json(JSON.stringify({ Status: 0 }));
