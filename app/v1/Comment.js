@@ -30,8 +30,7 @@ try {
         //console.log(Errors.array()); //todo CommentOut
         //console.log(JSON.stringify(Errors, null, 2)); //todo CommentOut
         //console.log(JSON.stringify(Errors.array(), null, 2)); //todo CommentOut
-        const Response = { status: 0 };
-        Response.Errors = Errors.array();
+        const Response = { status: 0, Errors: Errors };
         //console.log(Response); //todo CommentOut
         return res.status(404).json(JSON.stringify(Response));
       }
@@ -50,8 +49,7 @@ try {
             //console.log(results); //todo CommentOut
             connection.release();
             if (results && results.affectedRows >= 1) {
-              const obj = { status: 1, data: results };
-              res.status(200).json(JSON.stringify(obj));
+              res.status(200).json(JSON.stringify({ status: 1 }));
             } else if (results && results.affectedRows == 0) {
               res.status(200).json(JSON.stringify({ status: 0 }));
             } else if (error) {
@@ -77,8 +75,7 @@ try {
         //console.log(Errors.array());
         //console.log(JSON.stringify(Errors, null, 2));
         //console.log(JSON.stringify(Errors.array(), null, 2));
-        const Response = { status: 0 };
-        Response.Errors = Errors.array();
+        const Response = { status: 0, Errors: Errors };
         //console.log(Response); //todo CommentOut
         return res.status(404).json(JSON.stringify(Response));
       }
@@ -95,8 +92,7 @@ try {
             connection.release();
 
             if (results && results.affectedRows >= 1) {
-              const obj = { status: 1, data: results };
-              res.status(200).json(JSON.stringify(obj));
+              res.status(200).json(JSON.stringify({ status: 1 }));
             }
             if (results && results.affectedRows <= 0) {
               res.status(200).json(JSON.stringify({ status: 0 }));

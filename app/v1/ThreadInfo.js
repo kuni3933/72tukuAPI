@@ -2,7 +2,7 @@ require("dotenv").config();
 
 const express = require("express");
 const router = express.Router();
-const { check, validationResult } = require("express-validator");
+const { param, validationResult } = require("express-validator");
 
 require("date-utils");
 
@@ -19,7 +19,7 @@ try {
   router.get(
     "/Id/:id",
     // id must be an integer
-    check("id").isInt({ min: 1 }).escape(),
+    param("id").isInt({ min: 1 }).escape(),
     (req, res) => {
       const Errors = validationResult(req);
       if (!Errors.isEmpty()) {
@@ -28,8 +28,7 @@ try {
         //console.log(Errors.array()); //todo CommentOut
         //console.log(JSON.stringify(Errors, null, 2)); //todo CommentOut
         //console.log(JSON.stringify(Errors.array(), null, 2)); //todo CommentOut
-        const Response = { status: 0 };
-        Response.Errors = Errors.array();
+        const Response = { status: 0, Errors: Errors };
         //console.log(Response); //todo CommentOut
         return res.status(404).json(JSON.stringify(Response));
       }
@@ -62,7 +61,7 @@ try {
   router.get(
     "/Name/:name",
     // name must be an integer
-    check("name").isLength({ min: 1, max: 32 }).escape(),
+    param("name").isLength({ min: 1, max: 32 }).escape(),
     (req, res) => {
       const Errors = validationResult(req);
       if (!Errors.isEmpty()) {
@@ -71,8 +70,7 @@ try {
         //console.log(Errors.array()); //todo CommentOut
         //console.log(JSON.stringify(Errors, null, 2)); //todo CommentOut
         //console.log(JSON.stringify(Errors.array(), null, 2)); //todo CommentOut
-        const Response = { status: 0 };
-        Response.Errors = Errors.array();
+        const Response = { status: 0, Errors: Errors };
         //console.log(Response); //todo CommentOut
         return res.status(404).json(JSON.stringify(Response));
       }
@@ -106,7 +104,7 @@ try {
   router.get(
     "/Category/:category",
     // category must be an integer
-    check("category").isInt({ min: 1 }).escape(),
+    param("category").isInt({ min: 1 }).escape(),
     (req, res) => {
       const Errors = validationResult(req);
       if (!Errors.isEmpty()) {
@@ -115,8 +113,7 @@ try {
         //console.log(Errors.array()); //todo CommentOut
         //console.log(JSON.stringify(Errors, null, 2)); //todo CommentOut
         //console.log(JSON.stringify(Errors.array(), null, 2)); //todo CommentOut
-        const Response = { status: 0 };
-        Response.Errors = Errors.array();
+        const Response = { status: 0, Errors: Errors };
         //console.log(Response); //todo CommentOut
         return res.status(404).json(JSON.stringify(Response));
       }

@@ -24,8 +24,7 @@ SHOW WARNINGS;
 
 CREATE TABLE category(
 	category_id int auto_increment NOT NULL PRIMARY KEY,
-	category_name varchar(16) NOT NULL,
-	category_num int NOT NULL UNIQUE
+	category_name varchar(16) NOT NULL
 );
 SHOW WARNINGS;
 
