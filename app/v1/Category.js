@@ -29,7 +29,7 @@ try {
             //console.log(obj);
             //console.log(JSON.stringify(obj, null, 2));
             //console.log(JSON.parse(JSON.stringify(obj)));
-            res.status(200).json(obj);
+            res.status(200).json(JSON.stringify(obj));
           } else if (results && results.length == 0) {
             res.status(404).json(JSON.stringify({ Status: 0 }));
           } else if (error) {
