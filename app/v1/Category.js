@@ -26,15 +26,10 @@ try {
           //console.log(JSON.parse(JSON.stringify(results)));
           if (results && results.length > 0) {
             const obj = [];
-            results.forEach((element) => {
-              obj.push({
-                Category_Id: element.category_id,
-                Category_Name: element.category_name,
-              });
-            });
+            obj.push({ status: "1", data: results });
             //console.log(obj);
-            //console.log(JSON.stringify(obj, null, 2));
-            //console.log(JSON.parse(JSON.stringify(obj)));
+            console.log(JSON.stringify(obj, null, 2));
+            console.log(JSON.parse(JSON.stringify(obj)));
             res.status(200).json(JSON.stringify(obj));
           } else if (results && results.length == 0) {
             res.status(404).json(JSON.stringify({ Status: 0 }));
