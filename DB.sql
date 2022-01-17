@@ -33,21 +33,3 @@ ALTER TABLE thread_list ADD FOREIGN KEY (category_id) REFERENCES category(catego
 SHOW WARNINGS;
 ALTER TABLE comment ADD FOREIGN KEY (thread_id) REFERENCES thread_list(thread_id);
 SHOW WARNINGS;
-
-INSERT INTO category(category_id,category_name,category_num) VALUES (null,'test_1',1);
-INSERT INTO category(category_id,category_name,category_num) VALUES (null,'test_2',2);
-INSERT INTO category(category_id,category_name,category_num) VALUES (null,'test_3',3);
-INSERT INTO category(category_id,category_name,category_num) VALUES (null,'test_4',4);
-INSERT INTO category(category_id,category_name,category_num) VALUES (null,'test_5',5);
-
-INSERT INTO thread_list(thread_id,category_id,thread_name,thread_time,closed_flag) VALUES(null,1,'test_1','2022-01-12 11:35:01',0);
-INSERT INTO thread_list(thread_id,category_id,thread_name,thread_time,closed_flag) VALUES(null,2,'test_2','2022-01-12 11:35:02',0);
-INSERT INTO thread_list(thread_id,category_id,thread_name,thread_time,closed_flag) VALUES(null,3,'test_3','2022-01-12 11:35:03',0);
-INSERT INTO thread_list(thread_id,category_id,thread_name,thread_time,closed_flag) VALUES(null,4,'test_4','2022-01-12 11:35:04',0);
-INSERT INTO thread_list(thread_id,category_id,thread_name,thread_time,closed_flag) VALUES(null,5,'test_5','2022-01-12 11:35:05',0);
-
-INSERT INTO comment(comment_id,thread_id,comment,comment_time) VALUES(null,1,'test_1_1','2022-01-12 11:35:01');
-INSERT INTO comment(comment_id,thread_id,comment,comment_time) VALUES(null,2,'test_2_2','2022-01-12 11:35:02');
-INSERT INTO comment(comment_id,thread_id,comment,comment_time) VALUES(null,3,'test_3_3','2022-01-12 11:35:03');
-INSERT INTO comment(comment_id,thread_id,comment,comment_time) VALUES(null,4,'test_4_4','2022-01-12 11:35:04');
-INSERT INTO comment(comment_id,thread_id,comment,comment_time) VALUES(null,5,'test_5_5','2022-01-12 11:35:05');
