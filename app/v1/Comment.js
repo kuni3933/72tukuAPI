@@ -49,11 +49,17 @@ try {
             //console.log(results); //todo CommentOut
             connection.release();
             if (results && results.affectedRows >= 1) {
-              res.status(200).json(JSON.stringify({ status: 1 }));
-            } else if (results && results.affectedRows == 0) {
-              res.status(200).json(JSON.stringify({ status: 0 }));
+              res.status(200).json(
+                JSON.stringify({
+                  status: 1,
+                  thread_id: thread_id,
+                  comment_id: results.insertId,
+                })
+              );
             } else if (error) {
-              res.status(200).json(JSON.stringify({ status: 0 }));
+              res.status(404).json(JSON.stringify({ status: 0 }));
+            } else {
+              res.status(404).json(JSON.stringify({ status: 0 }));
             }
           }
         );
@@ -88,11 +94,17 @@ try {
           "DELETE FROM comment WHERE thread_id = ? AND comment_id = ?;",
           [thread_id, comment_id],
           (error, results) => {
-            //console.log(results); //todo CommentOut
+            console.log(results); //todo CommentOut
             connection.release();
 
             if (results && results.affectedRows >= 1) {
-              res.status(200).json(JSON.stringify({ status: 1 }));
+              res.status(200).json(
+                JSON.stringify({
+                  status: 1,
+                  thread_id: thread_id,
+                  comment_id: results.insertId,
+                })
+              );
             }
             if (results && results.affectedRows <= 0) {
               res.status(200).json(JSON.stringify({ status: 0 }));

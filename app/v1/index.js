@@ -8,17 +8,6 @@ try {
   router.use("/Thread", require("./Thread.js"));
   router.use("/Comment", require("./Comment.js"));
 
-  /*
-  const obj = {
-    tmp: "tmp",
-    tmp_array: [{ tmp_1: "tmp_1" }, { tmp_2: "tmp_2" }],
-  };
-  const json = JSON.stringify(obj);
-  console.log(json);
-  const decode = JSON.parse(json);
-  console.log(decode.tmp_array[0]);
-*/
-
   router.get("/", (req, res) => {
     res.status(200).json(
       JSON.stringify({

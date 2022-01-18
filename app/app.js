@@ -24,6 +24,35 @@ app.use(
   )
 );
 
+app.get("/", (req, res) => {
+  res.status(200).json(
+    JSON.stringify({
+      message: "Hello,world",
+    })
+  );
+});
+app.post("/", (req, res) => {
+  res.status(200).json(
+    JSON.stringify({
+      message: "Hello,world",
+    })
+  );
+});
+app.put("/", (req, res) => {
+  res.status(200).json(
+    JSON.stringify({
+      message: "Hello,world",
+    })
+  );
+});
+app.delete("/", (req, res) => {
+  res.status(200).json(
+    JSON.stringify({
+      message: "Hello,world",
+    })
+  );
+});
+
 // "app/v1"を定数v1に読み込む
 const v1 = require("./v1/");
 

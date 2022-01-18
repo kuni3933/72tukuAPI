@@ -15,6 +15,29 @@ var pool = mysql.createPool(db_config.mysql_setting);
 //var AdminToken = "true"; //|
 //---------------------------------
 try {
+  //SELECT *
+  router.get("/", (req, res) => {
+    pool.getConnection(function (err, connection) {
+      connection.execute(
+        "SELECT thread_id,thread_name,category_id FROM thread_list WHERE closed_flag = false;",
+        (error, results) => {
+          connection.release();
+          //console.log(results); //todo CommentOut
+          //console.log(JSON.stringify(results, null, 2)); //todo CommentOut
+          //console.log(JSON.parse(JSON.stringify(results))); //todo CommentOut
+          if (results && results.length >= 0) {
+            const obj = { status: 1, count: results.length, data: results };
+            res.status(200).json(JSON.stringify(obj));
+          } else if (error) {
+            res.status(404).json(JSON.stringify({ status: 0 }));
+          } else {
+            res.status(404).json(JSON.stringify({ status: 0 }));
+          }
+        }
+      );
+    });
+  });
+
   //SELECT Id
   router.get(
     "/Id/:id",
@@ -36,19 +59,21 @@ try {
 
       pool.getConnection(function (err, connection) {
         connection.execute(
-          "SELECT thread_id,thread_name,category_id FROM thread_list WHERE thread_id = ?;",
+          "SELECT thread_id,thread_name,category_id FROM thread_list WHERE closed_flag = false AND  thread_id = ?;",
           [id],
           (error, results) => {
             connection.release();
-            //console.log(results); //todo CommentOut
+            console.log(results); //todo CommentOut
             //console.log(JSON.stringify(results, null, 2)); //todo CommentOut
             //console.log(JSON.parse(JSON.stringify(results))); //todo CommentOut
-            if (results && results.length > 0) {
-              const obj = { status: 1, data: results };
+            if (results && results.length == 1) {
+              const obj = { status: 1, count: 1, data: results };
               res.status(200).json(JSON.stringify(obj));
-            } else if (results && results.length == 0) {
-              res.status(404).json(JSON.stringify({ status: 0 }));
+            } else if (results.length == 0) {
+              res.status(200).json(JSON.stringify({ status: 0, count: 0 }));
             } else if (error) {
+              res.status(404).json(JSON.stringify({ status: 0 }));
+            } else {
               res.status(404).json(JSON.stringify({ status: 0 }));
             }
           }
@@ -79,19 +104,19 @@ try {
       pool.getConnection(function (err, connection) {
         connection.execute(
           //todo
-          "SELECT thread_id,thread_name,category_id FROM thread_list WHERE thread_name LIKE ?;",
+          "SELECT thread_id,thread_name,category_id FROM thread_list WHERE closed_flag = false AND thread_name LIKE ?;",
           ["%" + name + "%"],
           (error, results) => {
             connection.release();
             //console.log(results); //todo CommentOut
             //console.log(JSON.stringify(results, null, 2)); //todo CommentOut
             //console.log(JSON.parse(JSON.stringify(results))); //todo CommentOut
-            if (results && results.length > 0) {
-              const obj = { status: 1, data: results };
+            if (results && results.length >= 0) {
+              const obj = { status: 1, count: results.length, data: results };
               res.status(200).json(JSON.stringify(obj));
-            } else if (results && results.length == 0) {
-              res.status(404).json(JSON.stringify({ status: 0 }));
             } else if (error) {
+              res.status(404).json(JSON.stringify({ status: 0 }));
+            } else {
               res.status(404).json(JSON.stringify({ status: 0 }));
             }
           }
@@ -121,19 +146,19 @@ try {
 
       pool.getConnection(function (err, connection) {
         connection.execute(
-          "SELECT thread_id,thread_name,category_id FROM thread_list WHERE category_id = ?;",
+          "SELECT thread_id,thread_name,category_id FROM thread_list WHERE closed_flag == 0 AND  category_id = ?;",
           [category_id],
           (error, results) => {
             connection.release();
             //console.log(results); //todo CommentOut
             //console.log(JSON.stringify(results, null, 2)); //todo CommentOut
             //console.log(JSON.parse(JSON.stringify(results))); //todo CommentOut
-            if (results && results.length > 0) {
-              const obj = { status: 1, data: results };
+            if (results && results.length >= 0) {
+              const obj = { status: 1, count: results.length, data: results };
               res.status(200).json(JSON.stringify(obj));
-            } else if (results && results.length == 0) {
-              res.status(404).json(JSON.stringify({ status: 0 }));
             } else if (error) {
+              res.status(404).json(JSON.stringify({ status: 0 }));
+            } else {
               res.status(404).json(JSON.stringify({ status: 0 }));
             }
           }
