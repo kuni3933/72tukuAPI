@@ -146,7 +146,7 @@ try {
 
       pool.getConnection(function (err, connection) {
         connection.execute(
-          "SELECT thread_id,thread_name,category_id FROM thread_list WHERE closed_flag == 0 AND  category_id = ?;",
+          "SELECT thread_id,thread_name,category_id FROM thread_list WHERE closed_flag == false AND category_id = ?;",
           [category_id],
           (error, results) => {
             connection.release();
