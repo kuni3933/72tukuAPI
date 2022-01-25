@@ -44,6 +44,13 @@ try {
             //console.log(JSON.stringify(results, null, 2)); //todo CommentOut
             //console.log(JSON.parse(JSON.stringify(results))); //todo CommentOut
             if (results.length >= 0) {
+              results.forEach((Rows) => {
+                Rows["comment_time"] = Rows["comment_time"]
+                  .toISOString()
+                  .replace(/-/g, "/")
+                  .replace("T", " ")
+                  .replace("Z", "");
+              });
               const obj = { status: 1, count: results.length, data: results };
               res.status(200).json(JSON.stringify(obj));
             } else if (error) {
@@ -78,6 +85,7 @@ try {
       const thread_name = req.body.thread_name;
 
       const dt = new Date();
+      dt.setHours(dt.getHours() + 9);
       const thread_time = dt.toFormat("YYYY-MM-DD HH24:MI:SS");
 
       pool.getConnection(function (err, connection) {
