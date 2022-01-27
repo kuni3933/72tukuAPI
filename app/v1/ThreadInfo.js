@@ -23,15 +23,22 @@ try {
         (error, results) => {
           connection.release();
           //console.log(results); //todo CommentOut
-          //console.log(JSON.stringify(results, null, 2)); //todo CommentOut
-          //console.log(JSON.parse(JSON.stringify(results))); //todo CommentOut
           if (results && results.length >= 0) {
-            const obj = { status: 1, count: results.length, data: results };
-            res.status(200).json(JSON.stringify(obj));
+            const obj = JSON.stringify(
+              {
+                status: 1,
+                count: results.length,
+                data: results,
+              },
+              null,
+              4
+            );
+            res.header("Content-Type", "application/json; charset=utf-8");
+            res.status(200).send(obj);
           } else if (error) {
-            res.status(404).json(JSON.stringify({ status: 0 }));
+            res.status(404).json({ status: 0 });
           } else {
-            res.status(404).json(JSON.stringify({ status: 0 }));
+            res.status(404).json({ status: 0 });
           }
         }
       );
@@ -49,11 +56,17 @@ try {
         //If there is an Error...//
         //console.log(Errors); //todo CommentOut
         //console.log(Errors.array()); //todo CommentOut
-        //console.log(JSON.stringify(Errors, null, 2)); //todo CommentOut
-        //console.log(JSON.stringify(Errors.array(), null, 2)); //todo CommentOut
-        const Response = { status: 0, Errors: Errors };
+        const Response = JSON.stringify(
+          {
+            status: 0,
+            Errors: Errors["errors"],
+          },
+          null,
+          4
+        );
         //console.log(Response); //todo CommentOut
-        return res.status(404).json(JSON.stringify(Response));
+        res.header("Content-Type", "application/json; charset=utf-8");
+        return res.status(404).send(Response);
       }
       const id = req.params.id;
 
@@ -63,18 +76,24 @@ try {
           [id],
           (error, results) => {
             connection.release();
-            console.log(results); //todo CommentOut
-            //console.log(JSON.stringify(results, null, 2)); //todo CommentOut
-            //console.log(JSON.parse(JSON.stringify(results))); //todo CommentOut
+            //console.log(results); //todo CommentOut
             if (results && results.length == 1) {
-              const obj = { status: 1, count: 1, data: results };
-              res.status(200).json(JSON.stringify(obj));
+              const obj = JSON.stringify(
+                {
+                  status: 1,
+                  count: 1,
+                  data: results,
+                },
+                null,
+                4
+              );
+              res.status(200).send(obj);
             } else if (results.length == 0) {
-              res.status(200).json(JSON.stringify({ status: 0, count: 0 }));
+              res.status(200).json({ status: 0, count: 0 });
             } else if (error) {
-              res.status(404).json(JSON.stringify({ status: 0 }));
+              res.status(404).json({ status: 0 });
             } else {
-              res.status(404).json(JSON.stringify({ status: 0 }));
+              res.status(404).json({ status: 0 });
             }
           }
         );
@@ -93,11 +112,14 @@ try {
         //If there is an Error...//
         //console.log(Errors); //todo CommentOut
         //console.log(Errors.array()); //todo CommentOut
-        //console.log(JSON.stringify(Errors, null, 2)); //todo CommentOut
-        //console.log(JSON.stringify(Errors.array(), null, 2)); //todo CommentOut
-        const Response = { status: 0, Errors: Errors };
+        const Response = JSON.stringify(
+          { status: 0, Errors: Errors["errors"] },
+          null,
+          4
+        );
         //console.log(Response); //todo CommentOut
-        return res.status(404).json(JSON.stringify(Response));
+        res.header("Content-Type", "application/json; charset=utf-8");
+        return res.status(404).send(Response);
       }
       const name = req.params.name;
 
@@ -109,15 +131,22 @@ try {
           (error, results) => {
             connection.release();
             //console.log(results); //todo CommentOut
-            //console.log(JSON.stringify(results, null, 2)); //todo CommentOut
-            //console.log(JSON.parse(JSON.stringify(results))); //todo CommentOut
             if (results && results.length >= 0) {
-              const obj = { status: 1, count: results.length, data: results };
-              res.status(200).json(JSON.stringify(obj));
+              const obj = JSON.stringify(
+                {
+                  status: 1,
+                  count: results.length,
+                  data: results,
+                },
+                null,
+                4
+              );
+              res.header("Content-Type", "application/json; charset=utf-8");
+              res.status(200).send(obj);
             } else if (error) {
-              res.status(404).json(JSON.stringify({ status: 0 }));
+              res.status(404).json({ status: 0 });
             } else {
-              res.status(404).json(JSON.stringify({ status: 0 }));
+              res.status(404).json({ status: 0 });
             }
           }
         );
@@ -136,11 +165,17 @@ try {
         //If there is an Error...//
         //console.log(Errors); //todo CommentOut
         //console.log(Errors.array()); //todo CommentOut
-        //console.log(JSON.stringify(Errors, null, 2)); //todo CommentOut
-        //console.log(JSON.stringify(Errors.array(), null, 2)); //todo CommentOut
-        const Response = { status: 0, Errors: Errors };
+        const Response = JSON.stringify(
+          {
+            status: 0,
+            Errors: Errors["errors"],
+          },
+          null,
+          4
+        );
         //console.log(Response); //todo CommentOut
-        return res.status(404).json(JSON.stringify(Response));
+        res.header("Content-Type", "application/json; charset=utf-8");
+        return res.status(404).send(Response);
       }
       const category_id = req.params.category;
 
@@ -151,15 +186,22 @@ try {
           (error, results) => {
             connection.release();
             //console.log(results); //todo CommentOut
-            //console.log(JSON.stringify(results, null, 2)); //todo CommentOut
-            //console.log(JSON.parse(JSON.stringify(results))); //todo CommentOut
             if (results && results.length >= 0) {
-              const obj = { status: 1, count: results.length, data: results };
-              res.status(200).json(JSON.stringify(obj));
+              const obj = JSON.stringify(
+                {
+                  status: 1,
+                  count: results.length,
+                  data: results,
+                },
+                null,
+                4
+              );
+              res.header("Content-Type", "application/json; charset=utf-8");
+              res.status(200).send(obj);
             } else if (error) {
-              res.status(404).json(JSON.stringify({ status: 0 }));
+              res.status(404).json({ status: 0 });
             } else {
-              res.status(404).json(JSON.stringify({ status: 0 }));
+              res.status(404).json({ status: 0 });
             }
           }
         );

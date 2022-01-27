@@ -20,10 +20,7 @@ try {
         "SELECT category_id,category_name FROM category;",
         (error, results) => {
           connection.release();
-
           //console.log(results);
-          //console.log(JSON.stringify(results, null, 2));
-          //console.log(JSON.parse(JSON.stringify(results)));
           if (results.length >= 0) {
             const obj = JSON.stringify(
               {
@@ -34,10 +31,8 @@ try {
               null,
               4
             );
-            //console.log(obj);
-            //console.log(JSON.stringify(obj, null, 2));
-            //console.log(JSON.parse(JSON.stringify(obj)));
-            res.header("Content-Type", "application/json");
+            //console.log(obj); //todo CommentOut
+            res.header("Content-Type", "application/json; charset=utf-8");
             res.status(200).send(obj);
           } else if (error) {
             console.log(error);
@@ -61,15 +56,13 @@ try {
         //If there is an Error...//
         //console.log(Errors); //todo CommentOut
         //console.log(Errors.array()); //todo CommentOut
-        //console.log(JSON.stringify(Errors, null, 2)); //todo CommentOut
-        //console.log(JSON.stringify(Errors.array(), null, 2)); //todo CommentOut
         const Response = JSON.stringify(
           { status: 0, Errors: Errors["errors"] },
           null,
           4
         );
         //console.log(Response); //todo CommentOut
-        res.header("Content-Type", "application/json");
+        res.header("Content-Type", "application/json; charset=utf-8");
         return res.status(404).send(Response);
       }
       const category_id = req.params.category_id;
@@ -81,18 +74,17 @@ try {
           (error, results) => {
             connection.release();
             //console.log(results); //todo CommentOut
-            //console.log(JSON.stringify(results, null, 2)); //todo CommentOut
-            //console.log(JSON.parse(JSON.stringify(results))); //todo CommentOut
             if (results.length == 1) {
               const obj = JSON.stringify(
                 { status: 1, count: results.length, data: results },
                 null,
                 4
               );
-              res.header("Content-Type", "application/json");
+              //console.log(obj); //todo CommentOut
+              res.header("Content-Type", "application/json; charset=utf-8");
               res.status(200).send(obj);
             } else if (results.length == 0) {
-              res.status(404).json({ status: 0, count: 0 });
+              res.status(404).json({ status: 1, count: 0 });
             } else if (error) {
               res.status(404).json({ status: 0 });
             } else {
@@ -116,15 +108,13 @@ try {
         //If there is an Error...//
         //console.log(Errors); //todo CommentOut
         //console.log(Errors.array()); //todo CommentOut
-        //console.log(JSON.stringify(Errors, null, 2)); //todo CommentOut
-        //console.log(JSON.stringify(Errors.array(), null, 2)); //todo CommentOut
         const Response = JSON.stringify(
           { status: 0, Errors: Errors["errors"] },
           null,
           4
         );
         //console.log(Response); //todo CommentOut
-        res.header("Content-Type", "application/json");
+        res.header("Content-Type", "application/json; charset=utf-8");
         return res.status(404).send(Response);
       }
       const category_name = req.body.category_name;
@@ -136,6 +126,7 @@ try {
           [category_name],
           (error, results) => {
             connection.release();
+            //console.log(results); //todo CommentOut
             if (results && results.affectedRows >= 1) {
               const obj = JSON.stringify(
                 {
@@ -146,7 +137,8 @@ try {
                 null,
                 4
               );
-              res.header("Content-Type", "application/json");
+              //console.log(obj); //todo CommentOut
+              res.header("Content-Type", "application/json; charset=utf-8");
               res.status(200).send(obj);
             } else if (results && results.affectedRows == 0) {
               res.status(404).json({ status: 0 });
