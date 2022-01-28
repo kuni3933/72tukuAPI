@@ -25,20 +25,16 @@ app.use(
 );
 
 app.get("/", (req, res) => {
-    const obj = { message: "Hello World!" };
-    res.status(200).json(obj);
+  res.status(200).json({ message: "Hello World!" });
 });
 app.post("/", (req, res) => {
-    const obj = { message: "Hello World!" };
-    res.status(200).json(obj);
+  res.status(200).json({ message: "Hello World!" });
 });
 app.put("/", (req, res) => {
-    const obj = { message: "Hello World!" };
-    res.status(200).json(obj);
+  res.status(200).json({ message: "Hello World!" });
 });
 app.delete("/", (req, res) => {
-    const obj = { message: "Hello World!" };
-    res.status(200).json(obj);
+  res.status(200).json({ message: "Hello World!" });
 });
 
 // "app/v1"を定数v1に読み込む
