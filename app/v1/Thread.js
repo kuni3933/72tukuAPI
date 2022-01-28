@@ -98,7 +98,9 @@ try {
       const thread_name = req.body.thread_name;
 
       const dt = new Date();
-      dt.setHours(dt.getHours() + 9);
+      if (process.env.DB_HOSTNAME == "localhost") {
+        dt.setHours(dt.getHours() + 9); //herokuだとなぜかUTCで処理/保存されるため9時間足す
+      }
       const thread_time = dt.toFormat("YYYY-MM-DD HH24:MI:SS");
 
       pool.getConnection(function (err, connection) {

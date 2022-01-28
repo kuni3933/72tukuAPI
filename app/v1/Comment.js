@@ -45,7 +45,9 @@ try {
       const API_Token = req.body.API_Token;
 
       const dt = new Date();
-      dt.setHours(dt.getHours() + 9); //herokuだとなぜかUTCで処理/保存されるため9時間足す
+      if (process.env.DB_HOSTNAME == "localhost") {
+          dt.setHours(dt.getHours() + 9); //herokuだとなぜかUTCで処理/保存されるため9時間足す
+      }
       const comment_time = dt.toFormat("YYYY-MM-DD HH24:MI:SS");
 
       pool.getConnection(function (err, connection) {
