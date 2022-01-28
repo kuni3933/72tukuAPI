@@ -28,17 +28,26 @@ try {
         //If there is an Error...//
         //console.log(Errors); //todo CommentOut
         //console.log(Errors.array()); //todo CommentOut
-        //console.log(JSON.stringify(Errors, null, 2)); //todo CommentOut
-        //console.log(JSON.stringify(Errors.array(), null, 2)); //todo CommentOut
-        const Response = { status: 0, Errors: Errors };
+        const Response = JSON.stringify(
+          {
+            status: 0,
+            Errors: Errors["errors"],
+          },
+          null,
+          4
+        );
         //console.log(Response); //todo CommentOut
-        return res.status(404).json(JSON.stringify(Response));
+        res.header("Content-Type", "application/json; charset=utf-8");
+        return res.status(404).send(Response);
       }
       const thread_id = req.body.thread_id;
       const comment = req.body.comment;
       const API_Token = req.body.API_Token;
 
       const dt = new Date();
+      if (process.env.DB_HOSTNAME == "localhost") {
+          dt.setHours(dt.getHours() + 9); //herokuだとなぜかUTCで処理/保存されるため9時間足す
+      }
       const comment_time = dt.toFormat("YYYY-MM-DD HH24:MI:SS");
 
       pool.getConnection(function (err, connection) {
@@ -49,17 +58,17 @@ try {
             //console.log(results); //todo CommentOut
             connection.release();
             if (results && results.affectedRows >= 1) {
-              res.status(200).json(
-                JSON.stringify({
-                  status: 1,
-                  thread_id: thread_id,
-                  comment_id: results.insertId,
-                })
-              );
+              const obj = JSON.stringify({
+                status: 1,
+                thread_id: thread_id,
+                comment_id: results.insertId,
+              });
+              res.header("Content-Type", "application/json; charset=utf-8");
+              res.status(200).send(obj);
             } else if (error) {
-              res.status(404).json(JSON.stringify({ status: 0 }));
+              res.status(404).json({ status: 0 });
             } else {
-              res.status(404).json(JSON.stringify({ status: 0 }));
+              res.status(404).json({ status: 0 });
             }
           }
         );
@@ -79,11 +88,13 @@ try {
         //If there is an Error...//
         //console.log(Errors);
         //console.log(Errors.array());
-        //console.log(JSON.stringify(Errors, null, 2));
-        //console.log(JSON.stringify(Errors.array(), null, 2));
-        const Response = { status: 0, Errors: Errors };
+        const Response = JSON.stringify({
+          status: 0,
+          Errors: Errors["errors"],
+        });
         //console.log(Response); //todo CommentOut
-        return res.status(404).json(JSON.stringify(Response));
+        res.header("Content-Type", "application/json; charset=utf-8");
+        return res.status(404).send(Response);
       }
       const thread_id = req.body.thread_id;
       const comment_id = req.body.comment_id;
@@ -98,18 +109,18 @@ try {
             connection.release();
 
             if (results && results.affectedRows >= 1) {
-              res.status(200).json(
-                JSON.stringify({
-                  status: 1,
-                  thread_id: thread_id,
-                  comment_id: results.insertId,
-                })
-              );
+              const obj = JSON.stringify({
+                status: 1,
+                thread_id: thread_id,
+                comment_id: results.insertId,
+              });
+              res.header("Content-Type", "application/json; charset=utf-8");
+              res.status(200).send(obj);
             }
             if (results && results.affectedRows <= 0) {
-              res.status(200).json(JSON.stringify({ status: 0 }));
+              res.status(200).json({ status: 0 });
             } else if (error) {
-              res.status(200).json(JSON.stringify({ status: 0 }));
+              res.status(200).json({ status: 0 });
             }
           }
         );

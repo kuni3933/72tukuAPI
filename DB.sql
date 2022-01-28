@@ -4,6 +4,13 @@ CREATE DATABASE 72tukudb;
 SHOW DATABASES;
 USE `72tukuDB`;
 
+CREATE TABLE category(
+	category_id int auto_increment NOT NULL PRIMARY KEY,
+	category_name varchar(16) NOT NULL UNIQUE
+);
+SHOW WARNINGS;
+
+
 CREATE TABLE thread_list(
 	thread_id int auto_increment NOT NULL PRIMARY KEY,
 	category_id int NOT NULL,
@@ -19,12 +26,6 @@ CREATE TABLE comment(
 	comment varchar(255) NOT NULL,
 	comment_time datetime NOT NULL,
 	PRIMARY KEY (comment_id,thread_id)
-);
-SHOW WARNINGS;
-
-CREATE TABLE category(
-	category_id int auto_increment NOT NULL PRIMARY KEY,
-	category_name varchar(16) NOT NULL
 );
 SHOW WARNINGS;
 

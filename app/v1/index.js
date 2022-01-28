@@ -9,36 +9,19 @@ try {
   router.use("/Comment", require("./Comment.js"));
 
   router.get("/", (req, res) => {
-    res.status(200).json(
-      JSON.stringify({
-        message: "Hello,world",
-      })
-    );
+    res.status(200).json({ message: "Hello World!" });
   });
   router.post("/", (req, res) => {
-    res.status(200).json(
-      JSON.stringify({
-        message: "Hello,world",
-      })
-    );
+    res.status(200).json({ message: "Hello World!" });
   });
   router.put("/", (req, res) => {
-    res.status(200).json(
-      JSON.stringify({
-        message: "Hello,world",
-      })
-    );
+    res.status(200).json({ message: "Hello World!" });
   });
   router.delete("/", (req, res) => {
-    res.status(200).json(
-      JSON.stringify({
-        message: "Hello,world",
-      })
-    );
+    res.status(200).json({ message: "Hello World!" });
   });
 } catch (err) {
   console.log(err);
-  res.status(404).json(JSON.stringify({ Error: "Error" }));
   throw new Error(err);
 }
 
