@@ -19,11 +19,18 @@ try {
   router.get("/", (req, res) => {
     pool.getConnection(function (err, connection) {
       connection.execute(
-        "SELECT thread_id,thread_name,category_id FROM thread_list WHERE closed_flag = false;",
+        "SELECT thread_id,thread_name,category_id,thread_time FROM thread_list WHERE closed_flag = false;",
         (error, results) => {
           connection.release();
           //console.log(results); //todo CommentOut
           if (results && results.length >= 0) {
+            results.forEach((Rows) => {
+              Rows["thread_time"] = Rows["thread_time"]
+                .toISOString()
+                .replace(/-/g, "/")
+                .replace("T", " ")
+                .replace("Z", "");
+            });
             const obj = JSON.stringify(
               {
                 status: 1,
@@ -72,12 +79,19 @@ try {
 
       pool.getConnection(function (err, connection) {
         connection.execute(
-          "SELECT thread_id,thread_name,category_id FROM thread_list WHERE closed_flag = false AND  thread_id = ?;",
+          "SELECT thread_id,thread_name,category_id,thread_time FROM thread_list WHERE closed_flag = false AND  thread_id = ?;",
           [id],
           (error, results) => {
             connection.release();
             //console.log(results); //todo CommentOut
             if (results && results.length == 1) {
+              results.forEach((Rows) => {
+                Rows["thread_time"] = Rows["thread_time"]
+                  .toISOString()
+                  .replace(/-/g, "/")
+                  .replace("T", " ")
+                  .replace("Z", "");
+              });
               const obj = JSON.stringify(
                 {
                   status: 1,
@@ -126,12 +140,19 @@ try {
       pool.getConnection(function (err, connection) {
         connection.execute(
           //todo
-          "SELECT thread_id,thread_name,category_id FROM thread_list WHERE closed_flag = false AND thread_name LIKE ?;",
+          "SELECT thread_id,thread_name,category_id,thread_time FROM thread_list WHERE closed_flag = false AND thread_name LIKE ?;",
           ["%" + name + "%"],
           (error, results) => {
             connection.release();
             //console.log(results); //todo CommentOut
             if (results && results.length >= 0) {
+              results.forEach((Rows) => {
+                Rows["thread_time"] = Rows["thread_time"]
+                  .toISOString()
+                  .replace(/-/g, "/")
+                  .replace("T", " ")
+                  .replace("Z", "");
+              });
               const obj = JSON.stringify(
                 {
                   status: 1,
@@ -181,12 +202,19 @@ try {
 
       pool.getConnection(function (err, connection) {
         connection.execute(
-          "SELECT thread_id,thread_name,category_id FROM thread_list WHERE closed_flag = false AND category_id = ?;",
+          "SELECT thread_id,thread_name,category_id,thread_time FROM thread_list WHERE closed_flag = false AND category_id = ?;",
           [category_id],
           (error, results) => {
             connection.release();
             //console.log(results); //todo CommentOut
             if (results && results.length >= 0) {
+              results.forEach((Rows) => {
+                Rows["thread_time"] = Rows["thread_time"]
+                  .toISOString()
+                  .replace(/-/g, "/")
+                  .replace("T", " ")
+                  .replace("Z", "");
+              });
               const obj = JSON.stringify(
                 {
                   status: 1,

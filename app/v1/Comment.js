@@ -46,9 +46,9 @@ try {
 
       const dt = new Date();
       if (process.env.DB_HOSTNAME != "localhost") {
-          dt.setHours(dt.getHours() + 9); //herokuだとなぜかUTCで処理/保存されるため9時間足す
+        dt.setHours(dt.getHours() + 9); //herokuだとなぜかUTCで処理/保存されるため9時間足す
       }
-      const comment_time = dt.toFormat("YYYY-MM-DD HH24:MI:SS");
+      const comment_time = dt.toFormat("YYYY-MM-DD HH24:MI:SS.MSS");
 
       pool.getConnection(function (err, connection) {
         connection.execute(
